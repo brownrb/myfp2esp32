@@ -1,0 +1,33 @@
+<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta http-equiv=refresh content="%RAT%"><title>myFP2ESP32 WEB SERVER</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="font-family:sans-serif;" text="%TXC%" bgcolor="%BKC%"><h2 style="color: #%TIC%">%PGT%</h2><p><h3 style="color: #%HEC%">PRESETS</h3></p><p><table><tr><td><b>Position</b> </td><td> &nbsp; </td><td> <span id="POS">%CPO%</span> </td></tr><tr><td><b>Target</b> </td><td> &nbsp; </td><td> %TPO% </td></tr><tr><td><b>isMoving</b> </td><td> &nbsp; </td><td> <span id="MOV">%MOV%</span> </td></tr></table></p><p><table><tr><td>Preset 0 </td><td> %P0F% </td><td><input type="submit" name="setp0" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop0" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 1 </td><td> %P1F% </td><td><input type="submit" name="setp1" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop1" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 2 </td><td> %P2F% </td><td><input type="submit" name="setp2" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop2" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 3 </td><td> %P3F% </td><td><input type="submit" name="setp3" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop3" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 4 </td><td> %P4F% </td><td><input type="submit" name="setp4" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop4" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 5 </td><td> %P5F% </td><td><input type="submit" name="setp5" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop5" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 6 </td><td> %P6F% </td><td><input type="submit" name="setp6" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop6" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 7 </td><td> %P7F% </td><td><input type="submit" name="setp7" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop7" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 8 </td><td> %P8F% </td><td><input type="submit" name="setp8" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop8" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr><tr><td>Preset 9 </td><td> %P9F% </td><td><input type="submit" name="setp9" style="height: 1.6em; width: 4.5em" value="Set"></td><td> &nbsp; </td><td><input type="submit" name="gop9" style="height: 1.6em; width: 4.5em" value="Goto"></td><td></form></td></tr></table></p><p><form action="/presets" method="post"><input type="hidden" name="ha" value="true"><input type="submit" value="HALT"></form></p><p><table><tr><td><form action="/" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="HOME"></form></td><td><form action="/move" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="MOVE"></form></td><td><form action="/presets" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="PRESETS"></form></td></tr></table></p><hr><p>&copy; R. Brown, Holger M, 2019-2022. All rights reserved</br>Driverboard: %NAM%, Firmware: %VER%, Heap: %HEA%, SUT: %SUT%</p>
+<script>
+function getposition() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+document.getElementById("POS").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/po", true);
+xhttp.send();
+}
+setInterval(function() {	
+getposition();
+}, 1000);
+</script>
+<script>
+function getismoving() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+document.getElementById("MOV").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/im", true);
+xhttp.send();
+}
+setInterval(function() {	
+getismoving();
+}, 666);
+</script>
+</body></html>
+

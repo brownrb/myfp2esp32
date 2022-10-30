@@ -1,0 +1,10 @@
+Most of these have no been tested
+
+OK
+myfp2esp32-tempprobe
+format-spiffs
+i2c_scanner
+
+
+NOK
+everything that is not listed under OK

@@ -1,0 +1,33 @@
+<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>myFP2ESP32 WEB SERVER</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="font-family:sans-serif;" text="%TXC%" bgcolor="%BKC%"><h2 style="color: #%TIC%">%PGT%</h2><h3 style="color: #%HEC%">MOVE</h3><p><table><tr><td><b>Position</b> </td><td> &nbsp; </td><td> <span id="POS1">%CPO%</span> </td></tr><tr><td><b>Target</b> </td><td> &nbsp; </td><td> %TPO% </td></tr><tr><td><b>isMoving</b> </td><td> &nbsp; </td><td> <span id="MOV">%MOV%</span> </td></tr></table></p><p></p><p><table><tr><td>%MOVL500%</td><td>%MOVL100%</td><td>%MOVL10%</td><td>%MOVL1%</td><td>%MOVP1%</td><td>%MOVP10%</td><td>%MOVP100%</td><td>%MOVP500%</td></tr></table></p><p><table><tr><td><b>Position </b>[<span id="POS2">%CP%</span>]</td><td>%PI%</td><td> %BP% </td></tr></table></p><p><table><tr><td><form action="/move" method="post"><input type="hidden" name="ha" value="true"><input type="submit" value="HALT"></form></td></tr></table></p><p><table><tr><td><form action="/" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="HOME"></form></td><td><form action="/move" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="MOVE"></form></td><td><form action="/presets" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="PRESETS"></form></td></tr></table></p><hr><p>&copy; R. Brown, Holger M, 2019-2022. All rights reserved</br>Driverboard: %NAM%, Firmware: %VER%, Heap: %HEA%, SUT: %SUT%</p><script>
+function getposition() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("POS1").innerHTML = this.responseText;
+  document.getElementById("POS2").innerHTML = this.responseText;
+ }
+};
+xhttp.open("GET", "/po", true);
+xhttp.send();
+}
+setInterval(function(){	
+getposition();
+}, 1000);
+</script>
+<script>
+function getismoving() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("MOV").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/im", true);
+xhttp.send();
+}
+setInterval(function(){	
+getismoving();
+}, 1100);
+</script>
+</body></html>
+

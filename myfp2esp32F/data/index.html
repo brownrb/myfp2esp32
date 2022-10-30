@@ -1,0 +1,94 @@
+<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>myFP2ESP32 WEB SERVER</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="font-family:sans-serif;" text="%TXC%" bgcolor="%BKC%"><h2 style="color: #%TIC%">%PGT%</h2><h3 style="color: #%HEC%">FOCUSER SETTINGS</h3><p><table><tr><td>Position [<span id="POS">%CPO%</span>] </td><td> %FPOS% %POSI% &nbsp; &nbsp; [Target <span id="TAR">%TAR%</span>]</td><td> %BPSET% </td><td><td>  %BPGO% %BFPOS% </td></tr><tr> &nbsp; </tr><tr><td>Maxsteps %MAXFS%</td><td> %MAXVAL% </td><td> %BMAXFS% </td></tr><tr> &nbsp; </tr><tr><td>IsMoving </td><td> <span id="MOV">%MOV%</span> </td><td> %BHA% </td></tr><tr> &nbsp; </tr><tr><td>Temp </td><td> <span id="TMP">%TEM%</span> %TUN% </td><td> %BTUN% </td></tr><tr> &nbsp; </tr><tr><td>Temp Resolution  &nbsp; </td><td> %TRI% </td><td> %BTPR% </td></tr><tr> &nbsp; </tr><tr><td>Coilpower </td><td> <span id="CP">%CPS%</span> </td> <td> %BCPS% </td></tr><tr> &nbsp; </tr><tr><td>Motorspeed %MSF%</td><td> %MS% </td><td> %BMSF% </td></tr><tr> &nbsp; </tr><tr><td>Park State </td><td> %PTS% </td> <td> %BPTS% </td></tr><tr><td>Park Status </td><td> <span id="PAR">%PAS%</span> </td></tr><tr> &nbsp; </tr><tr><td>Reverse </td><td> %RDS% </td> <td> %BRDS% </td></tr><tr> &nbsp; </tr><tr><td>StepMode %SMF%</td><td> %SMB% </td><td> %BSMF% </td></tr><tr> &nbsp; </tr></form></table></p><p><table><tr><td><form action="/" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="HOME"></form></td><td><form action="/move" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="MOVE"></form></td><td><form action="/presets" method="GET"><input type="submit" style="height: 1.6em; width: 7.5em" value="PRESETS"></form></td></tr></table></p><hr><p>&copy; R. Brown, Holger M, 2019-2022. All rights reserved</br>Driverboard: %NAM%, Firmware: %VER%, Heap: %HEA%, SUT: %SUT%</p><script>
+function getposition() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("POS").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/po", true);
+xhttp.send();
+}
+setInterval(function(){	
+getposition();
+}, 1000);
+</script>
+<script>
+function gettarget() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("TAR").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/ta", true);
+xhttp.send();
+}
+setInterval(function(){	
+gettarget();
+}, 1000);
+</script>
+<script>
+function getpark() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("PAR").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/pa", true);
+xhttp.send();
+}
+setInterval(function(){ 
+getpark();
+}, 2400);
+</script>
+
+<script>
+function getcp() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("CP").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/cp", true);
+xhttp.send();
+}
+setInterval(function(){ 
+getcp();
+}, 2500);
+</script>
+<script>
+function getismoving() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("MOV").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/im", true);
+xhttp.send();
+}
+setInterval(function(){	
+getismoving();
+}, 1000);
+</script>
+<script>
+function gettemp() {
+ var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+  document.getElementById("TMP").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "/tm", true);
+xhttp.send();
+}
+setInterval(function(){	
+gettemp();
+}, 3000);
+</script>
+</body></html>
+
+

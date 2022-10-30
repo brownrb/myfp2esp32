@@ -1,0 +1,76 @@
+I uploaded the firmware but the Board is showing as the older board I had before.
+* You forgot to upload the data files, and the controller is using the previous board_config.jsn file
+
+I uploaded the firmware but the Management Server is not found.
+* You forgot to upload the sketch data files
+* If controller mode is ACCESSPOINT, did you use the correct TCP/IP address and connect to the ACCESSPOINT
+* If controller mode is STATIONMODE, are you using the correct TCP/IP address (use IP Scanner)
+
+I uploaded the firmware and the data files but the Web Server is not working.
+* Did you use the Management server to enable and start the web server. The web server is disabled by default.
+* If controller mode is ACCESSPOINT, did you use the correct TCP/IP address and connect to the ACCESSPOINT
+* If controller mode is STATIONMODE, are you using the correct TCP/IP address (use IP Scanner)
+
+The push buttons are not working.
+* Did you use the Management server to enable the push buttons. The push buttons are disabled by default.
+
+The in-out LED's are not working.
+* Did you use the Management server to enable the in-out LED's. The in-out LED's are disabled by default.
+
+The Home Position Switch is not working.
+* Did you use the Management server to enable the Home Position Switch. The Home Position Switch is disabled by default.
+* Did you use a custom board configuration file and set the hpsw pin to -1? Use url:6060/showconfig to view the board config.
+* Did you change the board configuration file and set the hpsw pin to -1? Use url:6060/showconfig to view the board config.
+
+I enabled the joystick but the focuser moves even when the joystick is not moved.
+* Did you calibrate the joystick? Determine the correct values by running the AUTOCALIBIRATEJOYSTICK.ino program, then use those values to update the firmware and reprogram the controller.
+
+The push buttons are very slow. Is there a way to speed them up?
+* No.
+
+I am using TMC2209 with Stall Guard but it stops during a move and resets position to 0. When detecting a stall, the firmware sets the position to 0.
+* Did you determine the correct values for your stepper motor using the spreadsheets. 
+* Read the PDF and follow the instructions on how to generate the correct values for your stepper motor and how to determine the correct STALL_VALUE for your motor.
+
+I am using the ASCOM driver and the Windows Application. I get a No response msg when trying to connect.
+* Only the myFP2ESP32 ASCOM driver works with the myFP2ESP32 controller.
+* Did you enter the correct TCP/IP address and port number?
+
+Can I use the INDI myfocuserpro2 driver with the myFP2E controllers?
+* Yes, BUT you have to use the TCPIP interface and NOT the serial interface
+
+Can I use the myFP2 Windows application or myFP2 ASCOM driver with the myFP2E controllers?
+* No
+
+Can I use the myFP2ESP32W Windows application or myFP2ESP32 ASCOM driver with myFocuserPro2 controllers?
+* No
+
+I am using the myFP2ESP32 ASCOM driver, but am having issues. How do I generate a log file?
+* First enable the TRACE ON checkbox in the Setup dialog form for the driver. In Windows, the log files will be the users Documents\ASCOM\logs folder.
+
+How do I get a copy of the data_per.jsn and board_config.jsn files?
+* This is covered in the PDF.
+
+I am thinking of upgrading the firmware on the controller. How do I save my current configuration and restore it later?
+* This is covered in the PDF. You should save the data_per.jsn and board_config.jsn files, reprogram the controller. After reprogramming the controller with the updated firmware PLUS the sketch data files, open the saved .jsn files in a text editor, then use the Management server to set your settings. DO NOT upload the two saved files to the updated controller.
+
+I am trying to set the step mode. I set the stepmode, then click Set button. But when I use Get the stepmode has not changed.
+* Are you trying to set a step mode that the controller cannot support?
+* Is this a board with a fixed step mode?
+* access the board configuration file board_config.jsn (eg http://192.168.2.172:6060/board_config.jsn) and look for "maxstepmode":32,"stepmode":1 values (remember the saving to .jsn files is managed using a delay timer so you will need to wait till the time expires and the board file gets updated).
+
+I changed the focuser position or some setting and then rebooted the controller. The settings are not remembered.
+* The important focuser settings are placed into a timed queue and written to the data_per.jsn file when a specific time has elasped (60 seconds). If you reboot before the 60s has elapsed, the controller will not be able to save the changed values. Wait at least 60s after making a change before rebooting the controller.
+
+When the focuser is moving the Windows application does not show the position changing and only updates the position after the move has completed. Why can't I see the position changing?
+* On the Extra settings tab, check the option "FP updates when moving"
+
+I have the Joystick2 and the push switch does not work
+* You need to use firmware 222-7 or higher
+* For the following PCB boards, you need to use a 4.7K resistor pullup to 3V3 on D35. The best way to do this is to wire the resistor to a 2P header plug and connect it to J11 PBOUT (in other words short J11 PBOUT with a 4.7k resistor)
+** ESP32DRV8825 r08, ESP32CLOSEDLOOP r01, ESP32TMC22xx r02, ESP32ULN2003 r6
+
+
+
+
+

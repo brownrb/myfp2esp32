@@ -1,0 +1,7 @@
+Aug 15-2022
+I revisited the tuning test program.
+Made some improvements, a video and a document with instructions…
+It’s now relatively simple to determine the STALL_VALUE to be used in the focuser.
+If you read the doc and watch the video, it will become clear I hope…
+In case it isn’t, let me know and I'll try to explain it better.
+
