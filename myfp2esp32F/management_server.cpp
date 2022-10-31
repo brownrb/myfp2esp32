@@ -28,7 +28,7 @@
 // DO NOT CHANGE
 // -----------------------------------------------------------------------
 #ifdef  MNGTSRVR_PRINT
-#define MNGTSRVR_print(...)   Serial.print(__VA_ARGS__)
+#define MNGTSRVR_print(...)   ,,,,,,, m                                                            print(__VA_ARGS__)
 #define MNGTSRVR_println(...) Serial.println(__VA_ARGS__)
 #else
 #define MNGTSRVR_print(...)
@@ -106,6 +106,7 @@ extern WEB_SERVER *websrvr;
 // ----------------------------------------------------------------------
 extern bool display_start(void);
 extern void display_stop();
+extern void display_clear();
 extern byte display_status;
 
 
@@ -127,10 +128,11 @@ extern const char *OTAPassword;
 
 // cached vars
 extern char devicename[32];
-extern char backcolor[8];
-extern char textcolor[8];
 extern char titlecolor[8];
+extern char subtitlecolor[8];
 extern char headercolor[8];
+extern char textcolor[8];
+extern char backcolor[8];
 
 extern char ipStr[];
 extern char mySSID[];
@@ -373,12 +375,14 @@ extern MANAGEMENT_SERVER *mngsrvr;
 #define H_COLORFORM "<form action=\"/admin9\" method=\"post\">"
 #define H_TITLECOLORFIELD "<input type=\"text\" name=\"tic\" size=\"6\" value=\"%tinum%\">"
 #define H_TITLECOLORBTN "<input type=\"submit\" name=\"tiset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
-#define H_BACKCOLORFIELD "<input type=\"text\" name=\"bci\" size=\"6\" value=\"%bcnum%\">"
-#define H_BACKCOLORBTN "<input type=\"submit\" name=\"bcset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
+#define H_SUBTITLECOLORFIELD "<input type=\"text\" name=\"stc\" size=\"6\" value=\"%stnum%\">"
+#define H_SUBTITLECOLORBTN "<input type=\"submit\" name=\"stset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
 #define H_HEADERCOLORFIELD "<input type=\"text\" name=\"hci\" size=\"6\" value=\"%hcnum%\">"
 #define H_HEADERCOLORBTN "<input type=\"submit\" name=\"hcset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
 #define H_TEXTCOLORFIELD "<input type=\"text\" name=\"tci\" size=\"6\" value=\"%tcnum%\">"
 #define H_TEXTCOLORBTN "<input type=\"submit\" name=\"tecset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
+#define H_BACKCOLORFIELD "<input type=\"text\" name=\"bci\" size=\"6\" value=\"%bcnum%\">"
+#define H_BACKCOLORBTN "<input type=\"submit\" name=\"bcset\" style=\"height: 1.6em; width: 5.5em\" value=\"SET\">"
 #define H_COLORFORMEND "</form>"
 
 // pages
@@ -947,7 +951,7 @@ void MANAGEMENT_SERVER::getadmin1(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4700);                  // 300    4443
+  AdminPg.reserve(4700);                  // 303   4511
 
   MNGTSRVR_println("/admin1");
 
@@ -1249,10 +1253,11 @@ void MANAGEMENT_SERVER::getadmin1(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // ASCOM Server enable/disable %ASS %BAS%
     if ( ControllerData->get_ascomsrvr_enable() == V_ENABLED)
@@ -1380,7 +1385,7 @@ void MANAGEMENT_SERVER::getadmin2(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4200);                  // 300    4010
+  AdminPg.reserve(4200);                  // 303    4055
 
   MNGTSRVR_println("/admin2");
 
@@ -1472,10 +1477,11 @@ void MANAGEMENT_SERVER::getadmin2(void)
     file.close();
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // duckdns, state %DDS%
     if ( duckdns_status == V_RUNNING )
@@ -1566,7 +1572,7 @@ void MANAGEMENT_SERVER::getadmin3(void)
   // get admin pg 3 and send to client
   String AdminPg;
 
-  AdminPg.reserve(5200);                  // 300    4909
+  AdminPg.reserve(5300);                  // 303    5044
 
   MNGTSRVR_println("get /admin3 start");
 
@@ -1724,10 +1730,11 @@ void MANAGEMENT_SERVER::getadmin3(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // Coil Power, State %CPS%, Enable-Disable %BCPS%
     if ( ControllerData->get_coilpower_enable() == V_ENABLED)
@@ -1859,7 +1866,7 @@ void MANAGEMENT_SERVER::getadmin4(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(3600);                  // 300    3322
+  AdminPg.reserve(3600);                  // 303    3366
 
   MNGTSRVR_println("get /admin4");
 
@@ -1931,10 +1938,11 @@ void MANAGEMENT_SERVER::getadmin4(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     if ( ControllerData->get_backlash_in_enable() )
     {
@@ -1998,7 +2006,7 @@ void MANAGEMENT_SERVER::getadmin5(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4500);                  // 300    4214
+  AdminPg.reserve(4500);                  // 303    4260
 
   MNGTSRVR_println("get /admin5");
 
@@ -2151,10 +2159,11 @@ void MANAGEMENT_SERVER::getadmin5(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // HPSW and TMC Currents
 
@@ -2263,7 +2272,7 @@ void MANAGEMENT_SERVER::getadmin6(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4200);                  // 300    4006
+  AdminPg.reserve(4300);                  // 303    4075
 
   MNGTSRVR_println("get /admin6");
 
@@ -2387,10 +2396,11 @@ void MANAGEMENT_SERVER::getadmin6(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // In-out LEDs Enable/Disable, State %IOS%, Button %BIOS%
     if ( ControllerData->get_inoutled_enable() == V_ENABLED)
@@ -2492,7 +2502,7 @@ void MANAGEMENT_SERVER::getadmin7(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4400);                  // 301  4184
+  AdminPg.reserve(4400);                  // 303  4212
 
   MNGTSRVR_println("get /admin7");
 
@@ -2519,6 +2529,14 @@ void MANAGEMENT_SERVER::getadmin7(void)
       else if ( msg == "disable" )
       {
         ControllerData->set_display_enable(V_NOTENABLED);
+        // check if display is running, if so stop the display
+        if ( display_status == V_RUNNING )
+        {
+          // clear display
+          display_clear();
+          display_stop();      // optional, use helper
+          MNGTSRVR_println("post admin7: display: disable: stop");
+        }
       }
     }
 
@@ -2686,10 +2704,11 @@ void MANAGEMENT_SERVER::getadmin7(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // DISPLAY State enable %DST% Button %BDST%  Enabled NotEnabled
     AdminPg.replace("%DSTF%", H_ENABLEDISPLAYFORM);
@@ -2850,7 +2869,7 @@ void MANAGEMENT_SERVER::getadmin8(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4000);                  // 301    3715
+  AdminPg.reserve(4000);                  // 303    3721
 
   MNGTSRVR_println("get /admin8");
 
@@ -2981,11 +3000,11 @@ Get_Handler:
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
-
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // Temperature Probe State %TPS% Enable/Disable %BTPS%
     if ( ControllerData->get_tempprobe_enable() == V_NOTENABLED )
@@ -3105,7 +3124,7 @@ void MANAGEMENT_SERVER::getadmin9(void)
   String AdminPg;
   String msg;
 
-  AdminPg.reserve(4300);                  // 300    4088
+  AdminPg.reserve(4500);                  // 300    4269
 
   MNGTSRVR_println("get /admin9");
 
@@ -3152,11 +3171,11 @@ void MANAGEMENT_SERVER::getadmin9(void)
       }
     }
 
-    // get background color
-    msg = mserver->arg("bcset");
+    // get page title color
+    msg = mserver->arg("tiset");
     if ( msg != "" )
     {
-      String str = mserver->arg("bci");
+      String str = mserver->arg("tic");
       if ( str != "" )
       {
         boolean flag = true;
@@ -3172,21 +3191,21 @@ void MANAGEMENT_SERVER::getadmin9(void)
         }
         if ( flag == false )
         {
-          ERROR_println("ms: set back color: error non hex digit");
+          ERROR_println("ms: set title color: error non hex digit");
         }
         else
         {
-          ControllerData->set_wp_backcolor(str);
-          str.toCharArray(backcolor, str.length() + 1 );
+          ControllerData->set_wp_titlecolor(str);
+          str.toCharArray(titlecolor, str.length() + 1 );
         }
       }
     }
 
-    // get text color
-    msg = mserver->arg("tecset");
+    // get page sub-title color
+    msg = mserver->arg("stset");
     if ( msg != "" )
     {
-      String str = mserver->arg("tci");
+      String str = mserver->arg("stc");
       if ( str != "" )
       {
         boolean flag = true;
@@ -3202,12 +3221,12 @@ void MANAGEMENT_SERVER::getadmin9(void)
         }
         if ( flag == false )
         {
-          ERROR_println("ms: set text color: error non hex digit");
+          ERROR_println("ms: set sub-title color: error non hex digit");
         }
         else
         {
-          ControllerData->set_wp_textcolor(str);
-          str.toCharArray(textcolor, str.length() + 1 );
+          ControllerData->set_wp_subtitlecolor(str);
+          str.toCharArray(subtitlecolor, str.length() + 1 );
         }
       }
     }
@@ -3242,11 +3261,11 @@ void MANAGEMENT_SERVER::getadmin9(void)
       }
     }
 
-    // get page title color
-    msg = mserver->arg("tiset");
+    // get text color
+    msg = mserver->arg("tecset");
     if ( msg != "" )
     {
-      String str = mserver->arg("tic");
+      String str = mserver->arg("tci");
       if ( str != "" )
       {
         boolean flag = true;
@@ -3262,16 +3281,45 @@ void MANAGEMENT_SERVER::getadmin9(void)
         }
         if ( flag == false )
         {
-          ERROR_println("ms: set title color: error non hex digit");
+          ERROR_println("ms: set text color: error non hex digit");
         }
         else
         {
-          ControllerData->set_wp_titlecolor(str);
-          str.toCharArray(titlecolor, str.length() + 1 );
+          ControllerData->set_wp_textcolor(str);
+          str.toCharArray(textcolor, str.length() + 1 );
         }
       }
     }
 
+    // get background color
+    msg = mserver->arg("bcset");
+    if ( msg != "" )
+    {
+      String str = mserver->arg("bci");
+      if ( str != "" )
+      {
+        boolean flag = true;
+        // check that all are hex digits 0..9 and a..f
+        int len = str.length();
+        for ( int i = 0; i < len; i++ )
+        {
+          char ch = str[i];
+          if ( is_hexdigit(ch) == false )
+          {
+            flag = false;
+          }
+        }
+        if ( flag == false )
+        {
+          ERROR_println("ms: set back color: error non hex digit");
+        }
+        else
+        {
+          ControllerData->set_wp_backcolor(str);
+          str.toCharArray(backcolor, str.length() + 1 );
+        }
+      }
+    }
   } // end of post handler
 
   if ( SPIFFS.exists("/admin9.html"))
@@ -3282,10 +3330,11 @@ void MANAGEMENT_SERVER::getadmin9(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // Controller Mode
     if ( myfp2esp32mode == ACCESSPOINT )
@@ -3330,30 +3379,37 @@ void MANAGEMENT_SERVER::getadmin9(void)
     // build pg form for web page colors
     AdminPg.replace("%PGF%", H_COLORFORM);
 
-    // Title Color default #8e44ad
+    // Title Color default
     // input text field %TCI% button %BTCI%
     msg = H_TITLECOLORFIELD;
     msg.replace("%tinum%", ControllerData->get_wp_titlecolor());
     AdminPg.replace("%TCI%", msg);
     AdminPg.replace("%BTCI%", H_TITLECOLORBTN);
 
-    // Background color input text field %BCI% button %BBC% default #333333
-    msg = H_BACKCOLORFIELD;
-    msg.replace("%bcnum%", ControllerData->get_wp_backcolor());
-    AdminPg.replace("%BCI%", msg);
-    AdminPg.replace("%BBCI%", H_BACKCOLORBTN);
+    // Sub-title Color default
+    // input text field %STC% button %BTCI%
+    msg = H_SUBTITLECOLORFIELD;
+    msg.replace("%stnum%", ControllerData->get_wp_subtitlecolor());
+    AdminPg.replace("%SUTC%", msg);
+    AdminPg.replace("%BSUTC%", H_SUBTITLECOLORBTN);
 
-    // Header Group Color %HC% default #3399ff
+    // Header Group Color %HC% default
     msg = H_HEADERCOLORFIELD;
     msg.replace("%hcnum%", ControllerData->get_wp_headercolor());
     AdminPg.replace("%HCI%", msg);
     AdminPg.replace("%BHCI%", H_HEADERCOLORBTN);
 
-    // Text Color %TC% default #5d6d7e
+    // Text Color %TC% default
     msg = H_TEXTCOLORFIELD;
     msg.replace("%tcnum%", ControllerData->get_wp_textcolor());
     AdminPg.replace("%TEI%", msg);
     AdminPg.replace("%BTEI%", H_TEXTCOLORBTN);
+
+    // Background color input text field %BCI% button %BBC%
+    msg = H_BACKCOLORFIELD;
+    msg.replace("%bcnum%", ControllerData->get_wp_backcolor());
+    AdminPg.replace("%BCI%", msg);
+    AdminPg.replace("%BBCI%", H_BACKCOLORBTN);
 
     // end of form
     AdminPg.replace("%TCFE%", H_COLORFORMEND);
@@ -3412,7 +3468,7 @@ void MANAGEMENT_SERVER::checkreboot(void)
 void MANAGEMENT_SERVER::post_deletefile()
 {
   String AdminPg;
-  AdminPg.reserve(2700);                                // 250-17 2460
+  AdminPg.reserve(2700);                            // 303  2460
 
   if ( !check_access() )
   {
@@ -3441,10 +3497,11 @@ void MANAGEMENT_SERVER::post_deletefile()
 
       AdminPg.replace("%PGT%", devicename);
       // Web page colors
-      AdminPg.replace("%BKC%", backcolor);
-      AdminPg.replace("%TXC%", textcolor);
       AdminPg.replace("%TIC%", titlecolor);
+      AdminPg.replace("%STC%", subtitlecolor);
       AdminPg.replace("%HEC%", headercolor);
+      AdminPg.replace("%TXC%", textcolor);
+      AdminPg.replace("%BKC%", backcolor);
 
       AdminPg.replace("%FIL%", df );
 
@@ -3500,7 +3557,7 @@ void MANAGEMENT_SERVER::post_deletefile()
 void MANAGEMENT_SERVER::get_deletefile()
 {
   String AdminPg;
-  AdminPg.reserve(2700);                                // 250-17 2460
+  AdminPg.reserve(2700);                                // 303 2460
 
   if ( !check_access() )
   {
@@ -3518,10 +3575,11 @@ void MANAGEMENT_SERVER::get_deletefile()
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // add handler for reboot controller
     AdminPg.replace("%REBT%", H_CREBOOT);
@@ -3548,7 +3606,7 @@ void MANAGEMENT_SERVER::get_deletefile()
 
 // ----------------------------------------------------------------------
 // lists all files in file system
-// shorten format of filenames only, eg admin1.html, admin2.html, .... cntlr_config.jsn,
+// shorten format of filenames only, eg admin1.html, admin2.html, .... cntlr_config.jsn
 // ----------------------------------------------------------------------
 void MANAGEMENT_SERVER::get_filelist_short(void)
 {
@@ -3639,7 +3697,7 @@ void MANAGEMENT_SERVER::get_filelist_long(void)
 void MANAGEMENT_SERVER::get_notfound(void)
 {
   String AdminPg;
-  AdminPg.reserve(2500);                                // 250-17 2259
+  AdminPg.reserve(2500);                                // 303 2273
 
   if ( !check_access() )
   {
@@ -3693,10 +3751,11 @@ void MANAGEMENT_SERVER::get_notfound(void)
 
         AdminPg.replace("%PGT%", devicename);
         // Web page colors
-        AdminPg.replace("%BKC%", backcolor);
-        AdminPg.replace("%TXC%", textcolor);
         AdminPg.replace("%TIC%", titlecolor);
+        AdminPg.replace("%STC%", subtitlecolor);
         AdminPg.replace("%HEC%", headercolor);
+        AdminPg.replace("%TXC%", textcolor);
+        AdminPg.replace("%BKC%", backcolor);
 
         // add handler for reboot controller
         AdminPg.replace("%REBT%", H_CREBOOT);
@@ -3770,10 +3829,11 @@ void MANAGEMENT_SERVER::saveconfig(void)
       // Web page colors
       AdminPg.replace("%PGT%", devicename);
       // Web page colors
-      AdminPg.replace("%BKC%", backcolor);
-      AdminPg.replace("%TXC%", textcolor);
       AdminPg.replace("%TIC%", titlecolor);
+      AdminPg.replace("%STC%", subtitlecolor);
       AdminPg.replace("%HEC%", headercolor);
+      AdminPg.replace("%TXC%", textcolor);
+      AdminPg.replace("%BKC%", backcolor);
 
       // add handler for reboot controller
       AdminPg.replace("%REBT%", H_CREBOOT);
@@ -3813,10 +3873,11 @@ void MANAGEMENT_SERVER::saveconfig(void)
 
       AdminPg.replace("%PGT%", devicename);
       // Web page colors
-      AdminPg.replace("%BKC%", backcolor);
-      AdminPg.replace("%TXC%", textcolor);
       AdminPg.replace("%TIC%", titlecolor);
+      AdminPg.replace("%STC%", subtitlecolor);
       AdminPg.replace("%HEC%", headercolor);
+      AdminPg.replace("%TXC%", textcolor);
+      AdminPg.replace("%BKC%", backcolor);
 
       // add handler for reboot controller
       AdminPg.replace("%REBT%", H_CREBOOT);
@@ -3868,10 +3929,11 @@ void MANAGEMENT_SERVER::upload_file(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // add handler for reboot controller
     AdminPg.replace("%REBT%", H_CREBOOT);
@@ -3989,10 +4051,11 @@ void MANAGEMENT_SERVER::success(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // add handler for reboot controller
     AdminPg.replace("%REBT%", H_CREBOOT);
@@ -4043,10 +4106,11 @@ void MANAGEMENT_SERVER::fail(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // For future use
     AdminPg.replace("%ERRORMSG%", "");
@@ -4100,10 +4164,11 @@ void MANAGEMENT_SERVER::handlecmds(void)
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // add handler for reboot controller
     AdminPg.replace("%REBT%", H_CREBOOT);
@@ -5353,10 +5418,11 @@ void MANAGEMENT_SERVER::brdedit()
 
     AdminPg.replace("%PGT%", devicename);
     // Web page colors
-    AdminPg.replace("%BKC%", backcolor);
-    AdminPg.replace("%TXC%", textcolor);
     AdminPg.replace("%TIC%", titlecolor);
+    AdminPg.replace("%STC%", subtitlecolor);
     AdminPg.replace("%HEC%", headercolor);
+    AdminPg.replace("%TXC%", textcolor);
+    AdminPg.replace("%BKC%", backcolor);
 
     // put all the board settings into a table, so that the form will submit all elements to board save
     AdminPg.replace("%STA%", "<table><tr><td><form action=\"/brdedit\" method=\"post\"><input type=\"hidden\" name=\"wrbrd\" value=\"true\"></td><td> </td></tr>");

@@ -42,7 +42,7 @@ https://sourceforge.net/projects/myfocuserpro2-esp32/files/ASCOM%20Drivers/
 
 # TESTED WITH
 - myFP2ESP32W Windows application 1_2_5_2
-- myFP2ESP32ASCOM_300 ASCOM driver
+- myFP2ESP32ASCOM_301 ASCOM driver
 - myFP2 INDI driver *using Network* 
 - myFP2ESP32 Linux application 1.1.10.1
 - Web Browser on multiple hosts, Android tablet/phone
@@ -56,11 +56,11 @@ https://sourceforge.net/projects/myfocuserpro2-esp32/files/PCB%20Gerber%20Files/
 
 
 # Compiling for ESP32
-Compiling the source code requires Arduino IDE **v1.8.19** with the ExpressIF ESP32 Arduino extensions (Core 2.0.4). You will need to add the JSON file for the ESP32 library by using the File->Preferences menu of the 
+Compiling the source code requires Arduino IDE **v1.8.19** with the ExpressIF ESP32 Arduino extensions (Core 2.0.5). You will need to add the JSON file for the ESP32 library by using the File->Preferences menu of the 
 Arduino IDE and add the location for the library into the board manager
 https://dl.espressif.com/dl/package_esp32_index.json  
 
-Once specified, open the board manager, scroll down to ESP32 and install the latest version 2.0.4 (at the time of writing). Once the esp32 core is added, you can specify the target board as **ESP32 Dev** with Flash Size set to 4M (1MB SPIFFS) and upload speed of 115200.
+Once specified, open the board manager, scroll down to ESP32 and install the latest version 2.0.5 (at the time of writing). Once the esp32 core is added, you can specify the target board as **ESP32 Dev** with Flash Size set to 4M (1MB SPIFFS) and upload speed of 115200.
 
 
 # Arduino Compiler Option  
@@ -167,7 +167,7 @@ Requires 3rd party library  4.3.0 https://github.com/ThingPulse/esp8266-oled-ssd
 
 
 # COMPILE ENVIRONMENT : Tested with 
-* Arduino IDE 2.0.0
+* Arduino IDE 1.8.19
 * ESP32 Core 2.0.5
 Libraries  
 * Arduino JSON 6.19.4 https://github.com/bblanchon/ArduinoJson.git  

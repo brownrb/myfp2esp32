@@ -49,7 +49,7 @@ extern TEMP_PROBE *tempprobe;
 // DO NOT ENABLE DEBUGGING INFORMATION.
 
 // Remove comment to enable messages to Serial port
-#define DISPLAY_PRINT       1
+//#define DISPLAY_PRINT       1
 
 // -----------------------------------------------------------------------
 // DO NOT CHANGE

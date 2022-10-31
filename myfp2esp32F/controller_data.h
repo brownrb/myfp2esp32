@@ -117,11 +117,12 @@ class CONTROLLER_DATA
 
     byte get_filelistformat(void);
 
-    String get_wp_backcolor(void);
-    String get_wp_textcolor(void);
-    String get_wp_headercolor(void);
     String get_wp_titlecolor(void);
-
+    String get_wp_subtitlecolor(void);
+    String get_wp_headercolor(void);
+    String get_wp_textcolor(void);
+    String get_wp_backcolor(void);
+    
     void set_fposition(long);
     void set_maxstep(long);
     void set_focuserpreset(byte, long);
@@ -156,10 +157,11 @@ class CONTROLLER_DATA
     void set_stepsize_enable(byte);
     void set_tempcomp_enable(byte);
 
-    void set_wp_backcolor(String);
-    void set_wp_textcolor(String);
-    void set_wp_headercolor(String);
     void set_wp_titlecolor(String);
+    void set_wp_subtitlecolor(String);   
+    void set_wp_headercolor(String);   
+    void set_wp_textcolor(String);     
+    void set_wp_backcolor(String);
 
     void set_ascomsrvr_port(unsigned long);
     void set_mngsrvr_port(unsigned long);
@@ -333,10 +335,11 @@ class CONTROLLER_DATA
     int  tmc2225current;
     byte filelistformat;
 
-    String backcolor;
-    String textcolor;
-    String headercolor;
     String titlecolor;
+    String subtitlecolor;
+    String headercolor;
+    String textcolor;
+    String backcolor;
 
     // dataset board configuration
     String board;

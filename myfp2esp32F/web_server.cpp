@@ -82,11 +82,13 @@ extern bool display_off(void);
 extern void get_systemuptime(void);
 
 //cached vars
+// cached vars
 extern char devicename[32];
-extern char backcolor[8];
-extern char textcolor[8];
 extern char titlecolor[8];
+extern char subtitlecolor[8];
 extern char headercolor[8];
+extern char textcolor[8];
+extern char backcolor[8];
 
 
 // ----------------------------------------------------------------------
@@ -666,10 +668,10 @@ void WEB_SERVER::get_index(void)
 
   WSpg.replace("%PGT%", devicename);
   // Web page colors
-  WSpg.replace("%BKC%", backcolor);
-  WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%TIC%", titlecolor);
   WSpg.replace("%HEC%", headercolor);
+  WSpg.replace("%TXC%", textcolor);
+  WSpg.replace("%BKC%", backcolor);  
 
   // First cache the current position as it will be used multiple times
   String pos_c = String(driverboard->getposition());
@@ -1024,10 +1026,10 @@ void WEB_SERVER::get_move(void)
 
   WSpg.replace("%PGT%", devicename);
   // Web page colors
-  WSpg.replace("%BKC%", backcolor);
-  WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%TIC%", titlecolor);
   WSpg.replace("%HEC%", headercolor);
+  WSpg.replace("%TXC%", textcolor);
+  WSpg.replace("%BKC%", backcolor);  
 
   String pos = String(driverboard->getposition());
 
@@ -1420,10 +1422,10 @@ void WEB_SERVER::get_presets(void)
 
   WSpg.replace("%PGT%", devicename);
   // Web page colors
-  WSpg.replace("%BKC%", backcolor);
-  WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%TIC%", titlecolor);
   WSpg.replace("%HEC%", headercolor);
+  WSpg.replace("%TXC%", textcolor);
+  WSpg.replace("%BKC%", backcolor);  
 
   WSpg.replace("%CPO%", String(driverboard->getposition()));
   WSpg.replace("%TPO%", String(ftargetPosition));
@@ -1616,14 +1618,14 @@ void WEB_SERVER::get_notfound(void)
   WSpg.replace("%VER%", String(program_version));
   WSpg.replace("%NAM%", ControllerData->get_brdname());
 
-  String tmp = ControllerData->get_wp_backcolor();
-  WSpg.replace("%BKC%", tmp);
-  tmp = ControllerData->get_wp_textcolor();
-  WSpg.replace("%TXC%", tmp);
-  tmp = ControllerData->get_wp_titlecolor();
+  String tmp = ControllerData->get_wp_titlecolor();
   WSpg.replace("%TIC%", tmp);
   tmp = ControllerData->get_wp_headercolor();
   WSpg.replace("%HEC%", tmp);
+  tmp = ControllerData->get_wp_textcolor();
+  WSpg.replace("%TXC%", tmp);
+  tmp = ControllerData->get_wp_backcolor();
+  WSpg.replace("%BKC%", tmp);
 
   // drive board name
   WSpg.replace("%NAM%", ControllerData->get_brdname());

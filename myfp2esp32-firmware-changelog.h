@@ -20,6 +20,15 @@ KNOWN ISSUES
 
 
 ---------------------------------------------------------------------
+303 31-10-2022
+---------------------------------------------------------------------
+Add sub-title color to html pages (Management Server, Controller_Data)
+Add check to stop display if display is running and user disables display
+When display is disabled without first stopping, clear display
+Remove Serial.prints
+
+
+---------------------------------------------------------------------
 302 31-10-2022
 ---------------------------------------------------------------------
 fix for display update_position not showing focuser position correctly

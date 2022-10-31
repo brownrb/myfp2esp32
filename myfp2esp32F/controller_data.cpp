@@ -94,7 +94,6 @@ extern unsigned int display_maxcount;
 extern portMUX_TYPE displaytimeMux;
 
 
-
 // ----------------------------------------------------------------------
 // DEFINES
 // ----------------------------------------------------------------------
@@ -104,7 +103,7 @@ extern portMUX_TYPE displaytimeMux;
 #define DEFAULTON           1
 #define DEFAULTCELSIUS      1
 #define DEFAULTFAHREN       0
-#define DEFAULTDOCSIZE      2200                  // Arduino JSON assistant Total (recommended)  1536
+#define DEFAULTDOCSIZE      2200                  // Arduino JSON assistant Total (recommended)  1536 Deserialize 2048
 #define DEFAULTVARDOCSIZE   64
 #define DEFAULTBOARDSIZE    2000
 #define DEFAULTPOSITION     5000L
@@ -257,10 +256,12 @@ bool CONTROLLER_DATA::LoadConfiguration()
       this->stepsize_enable = doc_per["ss_en"];               // if 1, controller returns step size
       this->stepsize        = doc_per["ss_val"];              // the step size in microns, ie 7.2 - value * 10, so real stepsize = stepsize / 10 (maxval = 25.6)
       // web page colors
-      this->backcolor   = doc_per["bcol"].as<const char*>();
-      this->textcolor   = doc_per["tcol"].as<const char*>();
+      this->titlecolor  = doc_per["tcol"].as<const char*>();
+      this->subtitlecolor = doc_per["scol"].as<const char*>();
       this->headercolor = doc_per["hcol"].as<const char*>();
-      this->titlecolor  = doc_per["ticol"].as<const char*>();
+      this->textcolor   = doc_per["tcol"].as<const char*>();
+      this->backcolor   = doc_per["bcol"].as<const char*>();
+
       CNTLRDATA_println("cd: cntlr_config.jsn loaded OK");
     }
   }
@@ -472,10 +473,11 @@ void CONTROLLER_DATA::LoadDefaultPersistantData()
   this->stepsize_enable     = V_NOTENABLED;
   this->stepsize            = DEFAULTSTEPSIZE;
   // web page colors
+  this->titlecolor          = "8E44AD";
+  this->subtitlecolor       = "3399FF";
+  this->headercolor         = "2B65EC";
+  this->textcolor           = "5D6D7E";
   this->backcolor           = "333333";
-  this->textcolor           = "5d6d7e";
-  this->headercolor         = "3399ff";
-  this->titlecolor          = "8e44ad";
 
   SavePersitantConfiguration();               // write default values to SPIFFS
 }
@@ -751,6 +753,7 @@ bool CONTROLLER_DATA::SavePersitantConfiguration()
   // Don't forget to change the capacity to match your requirements.
   // Use arduinojson.org/assistant to compute the capacity.
   CNTLRDATA_println("cd: SavePersitantConfiguration: serialize data");
+  // 303 - 1170, Size 1536
   StaticJsonDocument<DEFAULTDOCSIZE> doc;
 
   doc["maxstep"]      = this->maxstep;
@@ -808,7 +811,7 @@ bool CONTROLLER_DATA::SavePersitantConfiguration()
   doc["blin_en"]    = this->backlash_in_enable;
   doc["blout_en"]   = this->backlash_out_enable;
   doc["blin_steps"] = this->backlashsteps_in;   // number of backlash steps to apply for IN moves
-  doc["blout_steps"]  = this->backlashsteps_out;
+  doc["blout_steps"] = this->backlashsteps_out;
   // coil power
   doc["cp_en"]      = this->coilpower_enable;
   // delay after move
@@ -829,11 +832,11 @@ bool CONTROLLER_DATA::SavePersitantConfiguration()
   doc["ss_en"]      = this->stepsize_enable;      // if 1, controller can return step size
   doc["ss_val"]     = this->stepsize;
   // web page colors
-  doc["bcol"]         = this->backcolor;
-  doc["tcol"]         = this->textcolor;
-  doc["hcol"]         = this->headercolor;
-  doc["ticol"]        = this->titlecolor;
-
+  doc["tcol"]       = this->titlecolor;
+  doc["scol"]       = this->subtitlecolor;
+  doc["hcol"]       = this->headercolor;
+  doc["tcol"]       = this->textcolor;
+  doc["bcol"]       = this->backcolor;
   // Serialize JSON to file
   if (serializeJson(doc, file) == 0)
   {
@@ -1234,6 +1237,11 @@ String CONTROLLER_DATA::get_wp_titlecolor(void)
   return this->titlecolor;
 }
 
+String CONTROLLER_DATA::get_wp_subtitlecolor(void)
+{
+  return this->subtitlecolor;
+}
+
 // ----------------------------------------------------------------------
 // Controller_Data : set()
 // ----------------------------------------------------------------------
@@ -1555,6 +1563,11 @@ void CONTROLLER_DATA::set_wp_headercolor(String newcolor)
 void CONTROLLER_DATA::set_wp_titlecolor(String newcolor)
 {
   this->StartDelayedUpdate(this->titlecolor, newcolor);
+}
+
+void CONTROLLER_DATA::set_wp_subtitlecolor(String newcolor)
+{
+  this->StartDelayedUpdate(this->subtitlecolor, newcolor);
 }
 
 

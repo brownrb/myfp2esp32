@@ -181,16 +181,15 @@ extern const char *T_RUNNING;
 
 // -----------------------------------------------------------------------
 // DEBUGGING
+// CAUTION: DO NOT ENABLE DEBUGGING INFORMATION
 // -----------------------------------------------------------------------
-// DO NOT ENABLE DEBUGGING INFORMATION.
-
 // Remove comment to enable messages to Serial port
 
-#define BOOTPRINT         1
+//#define BOOTPRINT         1
 
 //#define DEBUGPRINT       2
 
-#define ERRORPRINT       3
+//#define ERRORPRINT       3
 
 // -----------------------------------------------------------------------
 // DO NOT CHANGE

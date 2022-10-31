@@ -1,11 +1,11 @@
-// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 302
+// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 303
 // © Copyright Robert Brown 2014-2022. All Rights Reserved.
 // © Copyright Holger M, 2019-2021. All Rights Reserved.
 // © Copyright Pieter P, SPIFFs examples found online
 // © Copyright Paul P, 2021-2022. All Rights Reserved. TMC22xx code
 //   myfp2esp32-firmware.ino
-//   version: 302
-//   date:    30-10-2022
+//   version: 303
+//   date:    31-10-2022
 // ----------------------------------------------------------------------
 
 
@@ -293,10 +293,12 @@ DUCK_DNS *cntlr_DuckDNS;
 
 // cached vars for management/web server pages
 char devicename[32];
-char backcolor[8];
-char textcolor[8];
 char titlecolor[8];
+char subtitlecolor[8];
 char headercolor[8];
+char textcolor[8];
+char backcolor[8];
+
 
 // At 1st reboot after uploading data files the Management and TCPIP
 // servers are enabled and started. For all other options, the options
@@ -563,6 +565,17 @@ void display_on()
 #endif
 }
 
+// ----------------------------------------------------------------------
+// void display_clear(void);
+// Turn display clear
+// helper, optional
+// ----------------------------------------------------------------------
+void display_clear()
+{
+#if defined(ENABLE_TEXTDISPLAY) || defined(ENABLE_GRAPHICDISPLAY)
+  mydisplay->clear();
+#endif
+}
 
 // ----------------------------------------------------------------------
 // bool irremote_init(void);
@@ -878,17 +891,20 @@ void load_vars()
   tmp = ControllerData->get_devicename();
   tmp.toCharArray(devicename, tmp.length() + 1 );
 
-  tmp = ControllerData->get_wp_backcolor();
-  tmp.toCharArray(backcolor, tmp.length() + 1 );
+  tmp = ControllerData->get_wp_titlecolor();
+  tmp.toCharArray(titlecolor, tmp.length() + 1 );
+
+  tmp = ControllerData->get_wp_subtitlecolor();
+  tmp.toCharArray(subtitlecolor, tmp.length() + 1 );
+  
+  tmp = ControllerData->get_wp_headercolor();
+  tmp.toCharArray(headercolor, tmp.length() + 1 );
 
   tmp = ControllerData->get_wp_textcolor();
   tmp.toCharArray(textcolor, tmp.length() + 1 );
 
-  tmp = ControllerData->get_wp_titlecolor();
-  tmp.toCharArray(titlecolor, tmp.length() + 1 );
-
-  tmp = ControllerData->get_wp_headercolor();
-  tmp.toCharArray(headercolor, tmp.length() + 1 );
+  tmp = ControllerData->get_wp_backcolor();
+  tmp.toCharArray(backcolor, tmp.length() + 1 );
 }
 
 

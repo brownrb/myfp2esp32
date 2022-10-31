@@ -89,7 +89,7 @@
 // ----------------------------------------------------------------------
 
 // To enable the OLED TEXT display (SSD1306 or SSH1106 chip) uncomment the next line
-//#define ENABLE_TEXTDISPLAY        1
+#define ENABLE_TEXTDISPLAY        1
 
 // To enable the OLED GRAPHIC display (SSD1306 or SSH1106 chip) uncomment the next line
 //#define ENABLE_GRAPHICDISPLAY     2
