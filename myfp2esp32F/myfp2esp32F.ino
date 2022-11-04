@@ -1315,6 +1315,9 @@ void setup()
   esp_task_wdt_init(WDT_TIMEOUT, true);       // enable panic reboot, dump registers, serial output - exception decoder
   esp_task_wdt_add(NULL);                     // add code to watch dog timer
 
+  // Try to prevent WiFi power save mode
+  WiFi.setSleep(false);
+  
   reboot_start = false;                       // we have finished the reboot now
 
   boot_msg_println("Setup done, controller is ready");
