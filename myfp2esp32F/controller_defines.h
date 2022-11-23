@@ -148,6 +148,12 @@ enum tmc2209stallguard { Use_Stallguard, Use_Physical_Switch, Use_None };
 // ----------------------------------------------------------------------
 // DO NOT CHANGE
 // ----------------------------------------------------------------------
+extern const char *DEFAULTTITLECOLOR;
+extern const char *DEFAULTSUBTITLECOLOR;
+extern const char *DEFAULTHEADERCOLOR;
+extern const char *DEFAULTTEXTCOLLOR;
+extern const char *DEFAULTBACKCOLOR;
+
 extern const char *project_name;
 extern const char *program_version;
 extern const char *program_author;
@@ -185,11 +191,11 @@ extern const char *T_RUNNING;
 // -----------------------------------------------------------------------
 // Remove comment to enable messages to Serial port
 
-//#define BOOTPRINT         1
+#define BOOTPRINT         1
 
 //#define DEBUGPRINT       2
 
-//#define ERRORPRINT       3
+#define ERRORPRINT       3
 
 // -----------------------------------------------------------------------
 // DO NOT CHANGE

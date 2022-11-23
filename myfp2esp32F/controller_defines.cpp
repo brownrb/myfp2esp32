@@ -31,7 +31,13 @@ const char *JSONPAGETYPE        = "application/json";
 
 const char *H_FILENOTFOUNDSTR   = "<html><head><title>myFP2ESP32</title></head><body><p>myFP2ESP32</p><p>File not found</p><p><form action=\"/\" method=\"GET\"><input type=\"submit\" value=\"HOMEPAGE\"></form></p></body></html>";
 const char *H_FSNOTLOADEDSTR    = "<html><head><title>myFP2ESP32</title></head><body><p>myFP2ESP32</p><p>err: File-system not started.</p><p><form action=\"/\" method=\"GET\"><input type=\"submit\" value=\"HOMEPAGE\"></form></p></body></html>";
-const char *H_ISMOVINGPG		    = "<html><meta http-equiv=refresh content=\"10; url=/\"><head><title>myFP2ESP32</title><body><p>myFP2ESP32</p><p>Focuser is moving, please wait. Will retry in 10s.</p><p><form action=\"/\" method=\"GET\"><input type=\"submit\" value=\"HOMEPAGE\"></form></p></body></html>";
+const char *H_ISMOVINGPG		= "<html><meta http-equiv=refresh content=\"10; url=/\"><head><title>myFP2ESP32</title><body><p>myFP2ESP32</p><p>Focuser is moving, please wait. Will retry in 10s.</p><p><form action=\"/\" method=\"GET\"><input type=\"submit\" value=\"HOMEPAGE\"></form></p></body></html>";
+
+const char *DEFAULTTITLECOLOR    = "8E44AD";
+const char *DEFAULTSUBTITLECOLOR = "3399FF";
+const char *DEFAULTHEADERCOLOR   = "2B65EC";
+const char *DEFAULTTEXTCOLLOR    = "5D6D7E";
+const char *DEFAULTBACKCOLOR     = "333333";
 
 const char *T_CONTROLLERMODE    = "Controller mode ";
 const char *T_ACCESSPOINT       = "ACCESSPOINT";

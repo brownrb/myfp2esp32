@@ -249,14 +249,14 @@ bool CONTROLLER_DATA::LoadConfiguration()
       this->motorspeed      = doc_per["mspeed"];              // motorspeed slow, med, fast
       // park
       this->park_enable     = doc_per["park_en"];
-      this->park_time        = doc_per["park_time"];
+      this->park_time       = doc_per["park_time"];
       // reverse
       this->reverse_enable  = doc_per["rdir_en"];
       // stepsize
       this->stepsize_enable = doc_per["ss_en"];               // if 1, controller returns step size
       this->stepsize        = doc_per["ss_val"];              // the step size in microns, ie 7.2 - value * 10, so real stepsize = stepsize / 10 (maxval = 25.6)
       // web page colors
-      this->titlecolor  = doc_per["tcol"].as<const char*>();
+      this->titlecolor  = doc_per["ticol"].as<const char*>();
       this->subtitlecolor = doc_per["scol"].as<const char*>();
       this->headercolor = doc_per["hcol"].as<const char*>();
       this->textcolor   = doc_per["tcol"].as<const char*>();
@@ -473,11 +473,11 @@ void CONTROLLER_DATA::LoadDefaultPersistantData()
   this->stepsize_enable     = V_NOTENABLED;
   this->stepsize            = DEFAULTSTEPSIZE;
   // web page colors
-  this->titlecolor          = "8E44AD";
-  this->subtitlecolor       = "3399FF";
-  this->headercolor         = "2B65EC";
-  this->textcolor           = "5D6D7E";
-  this->backcolor           = "333333";
+  this->titlecolor          = DEFAULTTITLECOLOR;
+  this->subtitlecolor       = DEFAULTSUBTITLECOLOR;
+  this->headercolor         = DEFAULTHEADERCOLOR;
+  this->textcolor           = DEFAULTTEXTCOLLOR;
+  this->backcolor           = DEFAULTBACKCOLOR;
 
   SavePersitantConfiguration();               // write default values to SPIFFS
 }
@@ -832,7 +832,7 @@ bool CONTROLLER_DATA::SavePersitantConfiguration()
   doc["ss_en"]      = this->stepsize_enable;      // if 1, controller can return step size
   doc["ss_val"]     = this->stepsize;
   // web page colors
-  doc["tcol"]       = this->titlecolor;
+  doc["ticol"]      = this->titlecolor;
   doc["scol"]       = this->subtitlecolor;
   doc["hcol"]       = this->headercolor;
   doc["tcol"]       = this->textcolor;

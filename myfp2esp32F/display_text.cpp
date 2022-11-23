@@ -66,7 +66,6 @@ extern TEMP_PROBE *tempprobe;
 // ----------------------------------------------------------------------
 // EXTERNS
 // ----------------------------------------------------------------------
-extern char  ipStr[];
 extern char  mySSID[];
 extern int   myfp2esp32mode;                // controllermode, ACCESSPOINTMODE=1, STATIONMODE=2
 extern bool  isMoving;
@@ -764,7 +763,7 @@ void TEXT_DISPLAY::page7(void)
   {
     _display->setCursor(0, 0);
     _display->print(DT_SSID);
-    _display->print(mySSID);
+    _display->println(mySSID);
     _display->clearToEOL();
     _display->println();
     _display->print(DT_IP);

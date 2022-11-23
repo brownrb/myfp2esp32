@@ -1,11 +1,11 @@
-// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 303
+// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 304
 // © Copyright Robert Brown 2014-2022. All Rights Reserved.
 // © Copyright Holger M, 2019-2021. All Rights Reserved.
 // © Copyright Pieter P, SPIFFs examples found online
 // © Copyright Paul P, 2021-2022. All Rights Reserved. TMC22xx code
 //   myfp2esp32-firmware.ino
-//   version: 303
-//   date:    31-10-2022
+//   version: 304
+//   date:    23-11-2022
 // ----------------------------------------------------------------------
 
 
@@ -843,7 +843,7 @@ void load_vars()
   isMoving = false;
   update_delay_after_move_flag = -1;
   update_wifi_flag = 0;
-
+  
   // ascom server
   ascomsrvr_status = V_STOPPED;
 

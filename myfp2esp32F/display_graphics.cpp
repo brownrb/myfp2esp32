@@ -87,8 +87,7 @@ extern TCPIP_SERVER *tcpipsrvr;
 // ----------------------------------------------------------------------
 // EXTERNS
 // ----------------------------------------------------------------------
-extern char  ipStr[];
-extern char  mySSID[];
+extern char mySSID[];
 extern long  ftargetPosition;
 extern float temp;
 extern bool  filesystemloaded;

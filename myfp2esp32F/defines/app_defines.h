@@ -5,5 +5,5 @@
 // -------------------------------------------------------------------------
 
 const char *project_name	= "myFP2ESP32";
-const char *program_version = "303";
+const char *program_version = "304";
 const char *program_author	= "R Brown";

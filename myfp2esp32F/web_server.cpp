@@ -669,6 +669,7 @@ void WEB_SERVER::get_index(void)
   WSpg.replace("%PGT%", devicename);
   // Web page colors
   WSpg.replace("%TIC%", titlecolor);
+  WSpg.replace("%STC%", subtitlecolor);
   WSpg.replace("%HEC%", headercolor);
   WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%BKC%", backcolor);  
@@ -1027,6 +1028,7 @@ void WEB_SERVER::get_move(void)
   WSpg.replace("%PGT%", devicename);
   // Web page colors
   WSpg.replace("%TIC%", titlecolor);
+  WSpg.replace("%STC%", subtitlecolor);
   WSpg.replace("%HEC%", headercolor);
   WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%BKC%", backcolor);  
@@ -1423,6 +1425,7 @@ void WEB_SERVER::get_presets(void)
   WSpg.replace("%PGT%", devicename);
   // Web page colors
   WSpg.replace("%TIC%", titlecolor);
+  WSpg.replace("%STC%", subtitlecolor);
   WSpg.replace("%HEC%", headercolor);
   WSpg.replace("%TXC%", textcolor);
   WSpg.replace("%BKC%", backcolor);  

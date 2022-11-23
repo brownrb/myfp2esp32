@@ -3045,10 +3045,10 @@ Get_Handler:
       AdminPg.replace("%TPM%", T_FAHRENHEIT);
     }
 
-    // Temperature Resolution %TPR%, %BTPR%
+    // Temperature Resolution  %BTR%
     msg = H_TEMPPROBERESOLUTION;
     msg.replace("%tprn%", String(ControllerData->get_tempresolution()) );
-    AdminPg.replace("%BTPR%", msg);
+    AdminPg.replace("%BTR%", msg);
 
     // Temp Comp Available %TCA%
     if ( ControllerData->get_tcavailable() == V_ENABLED )

@@ -10,13 +10,23 @@ myFP2ESP32 Focus Controller
 © Copyright Robert Brown 2014-2022. All Rights Reserved.
 © Copyright Holger M, 2019-2021. All Rights Reserved.
 © Copyright Paul P, 2021-2022. All Rights Reserved.
-30 September 2022
+23 November 2022
 ---------------------------------------------------------------------
 
 
 ---------------------------------------------------------------------
 KNOWN ISSUES
 ---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+304 23-11-2022
+---------------------------------------------------------------------
+Prevent WiFi sleep mode
+Remove duplicated code when loading admin/web pages
+Fix temperature resolution not set correctly
+Fix for titlecolor being overwritten by textcolor
 
 
 ---------------------------------------------------------------------
