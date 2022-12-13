@@ -67,16 +67,16 @@ extern TEMP_PROBE *tempprobe;
 // EXTERNS
 // ----------------------------------------------------------------------
 extern char  mySSID[];
-extern int   myfp2esp32mode;                // controllermode, ACCESSPOINTMODE=1, STATIONMODE=2
+extern int   myfp2esp32mode; // controllermode, ACCESSPOINTMODE=1, STATIONMODE=2
 extern bool  isMoving;
 extern long  ftargetPosition;
 extern float temp;
-
-extern byte ota_status;
-extern byte ascomsrvr_status;
-extern byte mngsrvr_status;
-extern byte tcpipsrvr_status;
-extern byte websrvr_status;
+extern char  ipStr[16]; // correction Eric Harant 
+extern byte  ota_status;
+extern byte  ascomsrvr_status;
+extern byte  mngsrvr_status;
+extern byte  tcpipsrvr_status;
+extern byte  websrvr_status;
 
 
 // ----------------------------------------------------------------------

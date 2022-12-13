@@ -18,7 +18,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "controller_config.h"                  // includes boarddefs.h and controller_defines.h
+#include "controller_config.h" // includes boarddefs.h and controller_defines.h
 
 #if defined(ENABLE_GRAPHICDISPLAY)
 #include "SPIFFS.h"
@@ -87,10 +87,11 @@ extern TCPIP_SERVER *tcpipsrvr;
 // ----------------------------------------------------------------------
 // EXTERNS
 // ----------------------------------------------------------------------
-extern char mySSID[];
+extern char  mySSID[];
 extern long  ftargetPosition;
 extern float temp;
 extern bool  filesystemloaded;
+extern char  ipStr[16]; // correction Eric Harant 
 
 
 // ----------------------------------------------------------------------

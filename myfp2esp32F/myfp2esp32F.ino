@@ -1,11 +1,11 @@
-// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 304
+// myFP2ESP32 FIRMWARE OFFICIAL RELEASE 305
 // © Copyright Robert Brown 2014-2022. All Rights Reserved.
 // © Copyright Holger M, 2019-2021. All Rights Reserved.
 // © Copyright Pieter P, SPIFFs examples found online
 // © Copyright Paul P, 2021-2022. All Rights Reserved. TMC22xx code
 //   myfp2esp32-firmware.ino
-//   version: 304
-//   date:    23-11-2022
+//   version: 305
+//   date:    13-12-2022
 // ----------------------------------------------------------------------
 
 
@@ -683,68 +683,48 @@ void duckdns_refreshtime(int rt)
 }
 
 
-// ----------------------------------------------------------------------
-// bool readwificonfig( char *, char *, bool);
+// --------------------------------------------------------------
+// helper function : bool readwificonfig( char *, char *, char *, char *);
 // READ WIFICONFIG SSID/PASSWORD FROM FILE
-// Requires wificonfig.json
-// helper, optional
-// ----------------------------------------------------------------------
-bool readwificonfig( char* xSSID, char* xPASSWORD, bool retry )
-{
-  bool mstatus = false;
-#if defined(ENABLE_READWIFICONFIG)
+// Inputs: wificonfig.json
+// Outputs: mstatus
+// --------------------------------------------------------------
+bool readwificonfig(char *xSSID, char *xPASSWORD, char *ySSID, char *yPASSWORD) {
+#if defined(READWIFICONFIG)
   const String filename = "/wificonfig.json";
   String SSID_1, SSID_2;
   String PASSWORD_1, PASSWORD_2;
 
-  if ( filesystemloaded == false )                    // check if SPIFFS was started
-  {
-    return mstatus;
+  // SPIFFS may have failed to start
+  if (!filesystemloaded) {
+    return false;
   }
-
   File f = SPIFFS.open(filename, "r");
-  if (!f)
-  {
-    DEBUG_println("readwificonfig() file not found");
-  }
-  else
-  {
-    String data = f.readString();
+  if (f) {
+    String fdata = f.readString();
     f.close();
 
-    // Using JSON assistant - https://arduinojson.org/v5/assistant/
-    // 188 * 2
-    DynamicJsonDocument doc(400);
-    DeserializationError jerror = deserializeJson(doc, data);
-    if (jerror)
-    {
-      DEBUG_println("readwificonfig() deserialise error");
-    }
-    else
-    {
+    DynamicJsonDocument doc(250);  // allocate json buffer, assistant = 192
+    DeserializationError jerror = deserializeJson(doc, fdata);
+    if (!jerror) {
       // Decode JSON/Extract values
-      SSID_1     =  doc["mySSID"].as<const char*>();
-      PASSWORD_1 =  doc["myPASSWORD"].as<const char*>();
-      SSID_2     =  doc["mySSID_1"].as<const char*>();
-      PASSWORD_2 =  doc["myPASSWORD_1"].as<const char*>();
-      if ( retry == false )
-      {
-        // get first pair
-        SSID_1.toCharArray(xSSID, SSID_1.length() + 1);
-        PASSWORD_1.toCharArray(xPASSWORD, PASSWORD_1.length() + 1);
-        mstatus = true;
-      }
-      else
-      {
-        // get second pair
-        SSID_2.toCharArray(xSSID, SSID_2.length() + 1);
-        PASSWORD_2.toCharArray(xPASSWORD, PASSWORD_2.length() + 1);
-        mstatus = true;
-      }
+      SSID_1 = doc["mySSID"].as<const char *>();
+      PASSWORD_1 = doc["myPASSWORD"].as<const char *>();
+      SSID_2 = doc["mySSID_1"].as<const char *>();
+      PASSWORD_2 = doc["myPASSWORD_1"].as<const char *>();
+
+      // get first pair
+      SSID_1.toCharArray(xSSID, SSID_1.length() + 1);
+      PASSWORD_1.toCharArray(xPASSWORD, PASSWORD_1.length() + 1);
+
+      // get second pair
+      SSID_2.toCharArray(ySSID, SSID_2.length() + 1);
+      PASSWORD_2.toCharArray(yPASSWORD, PASSWORD_2.length() + 1);
+      return true;
     }
   }
-#endif // #if defined(ENABLE_READWIFICONFIG)   
-  return mstatus;
+#endif  // #if defined(READWIFICONFIG)
+  return false;
 }
 
 
@@ -947,13 +927,9 @@ void setup()
 
   //-------------------------------------------------
   // WIFICONFIG READ
+  // read mySSID, myPASSWORD from file if file exists, otherwise use defaults
   //-------------------------------------------------
-  // read network credentials
-#if  defined(ENABLE_READWIFICONFIG)
-  // read mySSID,myPASSWORD from file, otherwise use defaults
-  boot_msg_println("Load readwificonfig");
-  readwificonfig(mySSID, myPASSWORD, false);
-#endif // #if defined(ENABLE_READWIFICONFIG)
+  readwificonfig(mySSID, myPASSWORD, mySSID_1, myPASSWORD_1);
 
 
   //-------------------------------------------------
@@ -999,19 +975,14 @@ void setup()
     // check if connected after using first set of credentials - if not connected try second pair of credentials
     if ( WiFi.status() != WL_CONNECTED )
     {
-#if defined(ENABLE_READWIFICONFIG)
-      // try alternative credentials, mySSID_1, myPASSWORD_1 in the wificonfig.json file
-      readwificonfig(mySSID, myPASSWORD, true);
-#else
-      // there was no wificonfig.json file specified, so we will try again with
-      // the 2nd pair of credentials and reboot after 10 unsuccessful attempts to log on
+      // try again with 2nd set of credentials then reboot after 10 failed attempts to log on
       memset( mySSID, 0, 64);
       memset( myPASSWORD, 0, 64);
       memcpy( mySSID, mySSID_1, (sizeof(mySSID_1) / sizeof(mySSID_1[0]) ));
       memcpy( myPASSWORD, myPASSWORD_1, (sizeof(myPASSWORD_1) / sizeof(myPASSWORD_1[0])) );
-#endif // #ifdef ENABLE_READWIFICONFIG
-      WiFi.begin(mySSID, myPASSWORD);         // attempt to start the WiFi
-      delay(1000);
+      
+      // attempt to start the WiFi with 2nd set alternative credentials
+      WiFi.begin(mySSID, myPASSWORD);
       for (int attempts = 0; WiFi.status() != WL_CONNECTED; attempts++)
       {
         delay(1000);
